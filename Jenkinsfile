@@ -1,9 +1,20 @@
 pipeline {
-    agent { docker { image 'node:6.3' } }
+    agent none
     stages {
-        stage('build') {
+        stage('Install node') {
+            agent {
+                docker { image 'node:10' }
+            }
             steps {
-                sh 'npm --version'
+                sh 'node --version'
+            }
+        }
+        stage('Cypress tests') {
+            agent {
+                docker { image 'cypress/base:10' }
+            }
+            steps {
+                sh 'npx cypress run'
             }
         }
     }
