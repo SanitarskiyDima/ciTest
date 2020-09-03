@@ -3,7 +3,10 @@ pipeline {
     stages {
         stage('Install node') {
             agent {
-                docker { image 'node:10' }
+                docker { 
+                    image 'node:10'
+                    args '-u root:root'
+                    }
             }
             steps {
                 sh 'node --version'
@@ -11,7 +14,10 @@ pipeline {
         }
         stage('Cypress tests') {
             agent {
-                docker { image 'cypress/base:10' }
+                docker { 
+                    image 'cypress/base:10'
+                    args '-u root:root'
+                    }
             }
             steps {
                 sh 'npx cypress run'
